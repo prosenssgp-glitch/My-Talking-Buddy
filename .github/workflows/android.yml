@@ -18,8 +18,30 @@ jobs:
           java-version: '17'
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Restore stable debug signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/ishan-debug.keystore
+          key: ishan-debug-signing-key-v1
+      - name: Create debug signing key if missing
+        run: |
+          mkdir -p ~/.android
+          if [ ! -f ~/.android/ishan-debug.keystore ]; then
+            keytool -genkeypair -v \
+              -keystore ~/.android/ishan-debug.keystore \
+              -storepass ishan-debug-only \
+              -alias ishan-debug \
+              -keypass ishan-debug-only \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Ishan AI Friend Debug, OU=Development, O=Debug Build, L=Unknown, ST=Unknown, C=IN"
+          fi
       - name: Build debug APK
-        run: gradle assembleDebug
+        run: gradle --no-daemon clean assembleDebug
+      - name: Verify APK
+        run: |
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          ls -lh app/build/outputs/apk/debug/app-debug.apk
+          unzip -t app/build/outputs/apk/debug/app-debug.apk
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
