@@ -30,6 +30,9 @@ public class MainActivity extends Activity {
     addButton("➕ গণিত শেখো",v->say("চলো অঙ্ক করি! দুই যোগ তিন কত? উত্তর পাঁচ! এবার তুমি বলো, পাঁচ যোগ পাঁচ কত?"));
     addButton("🍚 খাবারের সময়",v->say("এই বন্ধু! খাওয়ার সময় হয়েছে! চলো খেয়ে নাও, নইলে পেটের মধ্যে ইঁদুর ফুটবল খেলবে! হিহিহি!"));
     addButton("🛁 গোসলের সময়",v->say("বন্ধু, গোসলের সময় হয়েছে! পরিষ্কার থাকলে শরীর ভালো থাকে। চলো তৈরি হও!"));
+    addButton("🧼 ঈশানকে সাবান মাখাও",v->say("চলো খেলতে খেলতে ঈশানকে গোসল করাই! আগে পানি, তারপর সাবান দিয়ে হাত-পা আর শরীর পরিষ্কার করি। চোখে সাবান দেবে না! 🫧"));
+    addButton("🚲 সাইকেল চালাও",v->say("ব্রুম ব্রুম! 🚲 ঈশান সাইকেল চালাচ্ছে! হেলমেট পরো, বড়দের সঙ্গে নিরাপদ জায়গায় চালাও, আর রাস্তার গাড়ি থেকে দূরে থাকো!"));
+    addButton("🚗 গাড়ি চালানোর খেলা",v->say("পিপ পিপ! 🚗 ঈশান এখন কল্পনার খেলনা গাড়ি চালাচ্ছে! বাস্তব গাড়ি শুধু বড়রা চালাবে। তুমি খেলনা গাড়ি দিয়ে খেলতে পারো!"));
     LinearLayout row=new LinearLayout(this); row.setOrientation(LinearLayout.HORIZONTAL); input=new EditText(this); input.setSingleLine(true); input.setHint("ঈশানকে কিছু বলো..."); row.addView(input,new LinearLayout.LayoutParams(0,-2,1)); Button send=new Button(this); send.setText("পাঠাও"); send.setOnClickListener(v->{String s=input.getText().toString().trim(); if(!s.isEmpty()){input.setText(""); respond(s);}}); row.addView(send); root.addView(row);
     Button mic=new Button(this); mic.setText("🎤 কথা বলো (চাপ দিলে শুনবে)"); mic.setOnClickListener(v->listen()); root.addView(mic);
   }
